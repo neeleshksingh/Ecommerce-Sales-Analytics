@@ -25,9 +25,16 @@
 - Seller location is used for logistics and regional analysis.
 - Seller information is descriptive and does not contain transaction data.
 
-## Payments
+# Order Payments
 
-(To be filled later)
+## Assumptions
+
+- An order may have multiple payment transactions.
+- One payment transaction belongs to only one order.
+- Payment amount represents the amount paid in that payment record.
+- Payment installments are applicable only for eligible payment methods.
+- Revenue calculations should use the payment_value column.
+- Payment information is stored separately to normalize transaction data.
 
 ## Reviews
 

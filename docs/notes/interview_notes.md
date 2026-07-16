@@ -389,6 +389,88 @@ Both locations are essential for e-commerce operations.
 
 ---
 
+# Order Payments
+
+## Q1. Why is there a separate Payments table?
+
+Payment information is separated from Orders to normalize financial transaction data and support multiple payment transactions for a single order.
+
+---
+
+## Q2. Why isn't order_id the primary key?
+
+Because one order can have multiple payment transactions.
+
+The unique identifier is:
+
+(order_id, payment_sequential)
+
+---
+
+## Q3. What does payment_sequential mean?
+
+It represents the sequence of payment transactions for the same order.
+
+Example:
+
+Payment 1
+
+↓
+
+Payment 2
+
+↓
+
+Payment 3
+
+---
+
+## Q4. Why are installments stored?
+
+To analyze customer payment behavior and installment usage.
+
+---
+
+## Q5. Can one order have multiple payment methods?
+
+Yes.
+
+Example:
+
+Credit Card + Voucher
+
+---
+
+## Q6. Which table should be used to calculate revenue?
+
+Revenue can be calculated using:
+
+Order Payments.payment_value
+
+or
+
+Order Items.price
+
+depending on the business requirement.
+
+---
+
+## Q7. Is Order Payments a master table?
+
+No.
+
+It is a transaction table.
+
+---
+
+## Q8. Why is payment information separated from Orders?
+
+To support:
+
+- Multiple payments
+- Multiple payment methods
+- Better database normalization
+
 # Database Design
 
 ## Q1. Why is the database normalized?

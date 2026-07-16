@@ -31,7 +31,11 @@
 | ✅     | Which seller has the highest average review score? _(Requires Reviews table)_ |
 | ✅     | Which states generate the most revenue?                                       |
 | ✅     | What is the average delivery time?                                            |
-| ⏳     | Which payment methods are most common?                                        |
+| ✅     | Which payment methods are most common?                                        |
+| ✅     | What is total revenue?                                                        |
+| ✅     | What is the average payment amount?                                           |
+| ✅     | How many customers use installments?                                          |
+| ✅     | Revenue by payment method?                                                    |
 | ⏳     | Which payment method failed the most?                                         |
 | ⏳     | Which products have high sales but low ratings?                               |
 | ✅     | Which products are delivered faster?                                          |
