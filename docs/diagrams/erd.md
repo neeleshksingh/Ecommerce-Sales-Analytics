@@ -21,19 +21,21 @@ The ERD is built incrementally after each table is analyzed. This ensures every 
 - Sellers
 - Order Payments
 - Order Reviews
+- Product Category Translation
 
 ---
 
 ## Current Relationships
 
-| Parent Table | Child Table    | Relationship      |
-| ------------ | -------------- | ----------------- |
-| Customers    | Orders         | One-to-Many (1:N) |
-| Orders       | Order Items    | One-to-Many (1:N) |
-| Orders       | Order Payments | One-to-Many (1:N) |
-| Orders       | Order Reviews  | One-to-One (0..1) |
-| Products     | Order Items    | One-to-Many (1:N) |
-| Sellers      | Order Items    | One-to-Many (1:N) |
+| Parent Table                 | Child Table    | Relationship      |
+| ---------------------------- | -------------- | ----------------- |
+| Customers                    | Orders         | One-to-Many (1:N) |
+| Orders                       | Order Items    | One-to-Many (1:N) |
+| Orders                       | Order Payments | One-to-Many (1:N) |
+| Orders                       | Order Reviews  | One-to-One (0..1) |
+| Product Category Translation | Products       | One-to-Many (1:N) |
+| Products                     | Order Items    | One-to-Many (1:N) |
+| Sellers                      | Order Items    | One-to-Many (1:N) |
 
 ---
 
@@ -41,23 +43,40 @@ The ERD is built incrementally after each table is analyzed. This ensures every 
 
 ```text
                               Customers
-                                  │
-                                1:N
-                                  │
-                                  ▼
-                               Orders
-          ┌───────────────────────┼────────────────────────┐
-          │                       │                        │
-        1:N                     1:N                    1:0..1
-          │                       │                        │
-          ▼                       ▼                        ▼
-    Order Items           Order Payments          Order Reviews
-      ▲       ▲
-      │       │
-    N:1     N:1
-      │       │
-      ▼       ▼
-  Products  Sellers
+                                   │
+                             Places Orders
+                                   │
+                                 1:N
+                                   │
+                                   ▼
+                                Orders
+             ┌─────────────────────┼─────────────────────┐
+             │                     │                     │
+          Contains              Paid By             Reviewed By
+             │                     │                     │
+            1:N                   1:N                1:0..1
+             │                     │                     │
+             ▼                     ▼                     ▼
+       Order Items         Order Payments      Order Reviews
+             ▲
+             │
+          Refers To
+             │
+             ▼
+          Products
+             ▲
+             │
+     Categorized As
+             │
+             ▼
+Product Category Translation
+
+             ▲
+             │
+          Sold By
+             │
+             ▼
+          Sellers
 ```
 
 ---
@@ -65,19 +84,19 @@ The ERD is built incrementally after each table is analyzed. This ensures every 
 ## Pending Tables
 
 - Geolocation
-- Product Category Translation
 
 ---
 
 ## ERD Versions
 
-| Version   | Description                      |
-| --------- | -------------------------------- |
-| Version 1 | Customers → Orders → Order Items |
-| Version 2 | Added Products                   |
-| Version 3 | Added Sellers                    |
-| Version 4 | Added Order Payments             |
-| Version 5 | Added Order Reviews              |
+| Version   | Description                        |
+| --------- | ---------------------------------- |
+| Version 1 | Customers → Orders → Order Items   |
+| Version 2 | Added Products                     |
+| Version 3 | Added Sellers                      |
+| Version 4 | Added Order Payments               |
+| Version 5 | Added Order Reviews                |
+| Version 6 | Added Product Category Translation |
 
 ---
 

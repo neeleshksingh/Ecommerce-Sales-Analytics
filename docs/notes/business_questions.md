@@ -34,6 +34,15 @@
 - Which months receive the highest average review scores?
 - How many completed orders were never reviewed?
 
+## Product Categories
+
+- Which product categories generate the highest revenue?
+- Which categories receive the highest average review scores?
+- Which categories have the most products?
+- Which categories are purchased most frequently?
+- Which categories have the highest freight costs?
+- Which categories have the fastest average delivery times?
+
 # Business Questions Progress
 
 | Status | Question                                                                      |

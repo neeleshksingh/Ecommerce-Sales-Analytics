@@ -644,3 +644,24 @@ It helps measure the platform's responsiveness to customer feedback and enables 
 - Identify orders without reviews.
 - Rank sellers based on average customer ratings.
 - Compare delivery performance with review scores.
+
+## Product Category Translation
+
+### Why is this table separate from Products?
+
+Keeping translations in a separate lookup table follows normalization principles. It avoids repeating the English category name for every product and allows translations to be maintained independently.
+
+---
+
+### Why join this table?
+
+Joining this table enables reports and dashboards to display category names in English, making them easier to understand for a global audience.
+
+---
+
+### Common SQL Questions
+
+- Find revenue by product category.
+- Find the highest-selling category.
+- Rank categories by average review score.
+- Calculate the number of products in each category.

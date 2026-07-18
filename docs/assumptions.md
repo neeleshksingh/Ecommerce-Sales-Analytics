@@ -44,3 +44,10 @@
 - Review comments are optional.
 - Review creation occurs after order delivery.
 - The answer timestamp should not be earlier than the review creation date.
+
+## Product Category Translation
+
+- Each Portuguese category has one English translation.
+- A category can be associated with multiple products.
+- Products without a matching category translation may appear untranslated in reports.
+- Category names should remain consistent across the dataset.
