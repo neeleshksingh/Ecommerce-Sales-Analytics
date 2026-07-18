@@ -45,3 +45,33 @@ This relationship enables customer satisfaction analysis by connecting order inf
 - Review score by product category
 - Review score by delivery performance
 - Positive vs negative reviews
+
+
+
+## Product Category Translation ↔ Products
+
+### Relationship
+
+Product Category Translation (1) → Products (N)
+
+### Why?
+
+- Each Portuguese product category has one English translation.
+- Many products can belong to the same category.
+- The translation table acts as a lookup table for reporting and analytics.
+
+### Foreign Key
+
+Products.product_category_name → ProductCategoryTranslation.product_category_name
+
+### Business Meaning
+
+This relationship enables dashboards and reports to display category names in English while maintaining a normalized database design.
+
+### Future Analysis
+
+- Revenue by Category
+- Orders by Category
+- Average Rating by Category
+- Best Selling Categories
+- Category Performance

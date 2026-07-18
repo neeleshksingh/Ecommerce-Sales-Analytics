@@ -87,3 +87,10 @@
 | review_comment_message  | TEXT      | Detailed review message.                                |
 | review_creation_date    | TIMESTAMP | Date when the review was created.                       |
 | review_answer_timestamp | TIMESTAMP | Timestamp when the review was answered by the platform. |
+
+# Product Category Translation
+
+| Column                        | Data Type | Description                                  |
+| ----------------------------- | --------- | -------------------------------------------- |
+| product_category_name         | VARCHAR   | Product category name in Portuguese.         |
+| product_category_name_english | VARCHAR   | English translation of the product category. |
