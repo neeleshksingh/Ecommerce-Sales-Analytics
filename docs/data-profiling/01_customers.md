@@ -1,41 +1,46 @@
 # Customers Table Profiling
 
 ## Purpose
+
 Stores customer identification and geographical information. This table is used to identify customers and perform regional analysis based on city, state, and ZIP code.
 
 ## One Row Represents
+
 Each row represents a customer record associated with an order. The table contains customer identifiers and location details.
 
 ## Columns
 
-| Column | Description |
-|---------|-------------|
-| customer_id | Unique customer identifier used in orders |
-| customer_unique_id | Identifier representing the same customer across multiple orders |
-| customer_zip_code_prefix | Customer ZIP code prefix |
-| customer_city | Customer city |
-| customer_state | Customer state |
+| Column                   | Description                                                      |
+| ------------------------ | ---------------------------------------------------------------- |
+| customer_id              | Unique customer identifier used in orders                        |
+| customer_unique_id       | Identifier representing the same customer across multiple orders |
+| customer_zip_code_prefix | Customer ZIP code prefix                                         |
+| customer_city            | Customer city                                                    |
+| customer_state           | Customer state                                                   |
 
 ## Primary Key
+
 customer_id
 
 ## Business Key
+
 customer_unique_id
 
 ## Foreign Keys
+
 None.
 
 This table is referenced by the Orders table using customer_id.
 
 ## Expected Data Types
 
-| Column | Data Type |
-|---------|-----------|
-| customer_id | VARCHAR |
-| customer_unique_id | VARCHAR |
-| customer_zip_code_prefix | INTEGER |
-| customer_city | VARCHAR |
-| customer_state | CHAR(2) |
+| Column                   | Data Type |
+| ------------------------ | --------- |
+| customer_id              | VARCHAR   |
+| customer_unique_id       | VARCHAR   |
+| customer_zip_code_prefix | INTEGER   |
+| customer_city            | VARCHAR   |
+| customer_state           | CHAR(2)   |
 
 ## Business Importance
 
