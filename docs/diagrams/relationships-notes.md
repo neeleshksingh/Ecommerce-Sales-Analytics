@@ -46,8 +46,6 @@ This relationship enables customer satisfaction analysis by connecting order inf
 - Review score by delivery performance
 - Positive vs negative reviews
 
-
-
 ## Product Category Translation ↔ Products
 
 ### Relationship
@@ -75,3 +73,59 @@ This relationship enables dashboards and reports to display category names in En
 - Average Rating by Category
 - Best Selling Categories
 - Category Performance
+
+## Geolocation ↔ Customers
+
+### Relationship
+
+Geolocation (1) → Customers (N)
+
+### Why?
+
+Each customer belongs to a geographical region identified by a ZIP code prefix. Multiple customers can share the same ZIP code prefix.
+
+### Logical Join
+
+# Customers.customer_zip_code_prefix
+
+Geolocation.geolocation_zip_code_prefix
+
+### Business Meaning
+
+This relationship enables customer distribution, regional sales, and delivery performance analysis.
+
+### Future Analysis
+
+- Customers by State
+- Customers by City
+- Revenue by State
+- Delivery Performance by Region
+
+---
+
+## Geolocation ↔ Sellers
+
+### Relationship
+
+Geolocation (1) → Sellers (N)
+
+### Why?
+
+Each seller belongs to a geographical region identified by a ZIP code prefix. Multiple sellers can operate within the same ZIP code prefix.
+
+### Logical Join
+
+# Sellers.seller_zip_code_prefix
+
+Geolocation.geolocation_zip_code_prefix
+
+### Business Meaning
+
+This relationship enables seller distribution and logistics analysis.
+
+### Future Analysis
+
+- Sellers by State
+- Sellers by City
+- Regional Seller Density
+- Regional Logistics Analysis

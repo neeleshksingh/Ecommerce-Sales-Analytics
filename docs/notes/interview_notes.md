@@ -665,3 +665,25 @@ Joining this table enables reports and dashboards to display category names in E
 - Find the highest-selling category.
 - Rank categories by average review score.
 - Calculate the number of products in each category.
+
+## Geolocation
+
+### Why is there no Primary Key?
+
+The source dataset contains duplicate ZIP code prefixes with different latitude and longitude values. Therefore, no single column uniquely identifies every row.
+
+---
+
+### Why isn't there a Foreign Key?
+
+Although Customers and Sellers reference ZIP code prefixes conceptually, the duplicate values in the Geolocation table prevent a strict foreign key relationship in the physical database.
+
+---
+
+### Common SQL Questions
+
+- Find the number of customers by state.
+- Find the number of sellers by city.
+- Calculate revenue by state.
+- Compare average delivery time across regions.
+- Rank states by customer satisfaction.

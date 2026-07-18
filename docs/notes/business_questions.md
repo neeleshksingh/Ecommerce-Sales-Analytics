@@ -43,6 +43,17 @@
 - Which categories have the highest freight costs?
 - Which categories have the fastest average delivery times?
 
+## Geographical Analysis
+
+- Which states generate the highest revenue?
+- Which cities have the highest number of customers?
+- Which cities have the highest number of sellers?
+- Which regions have the highest average delivery time?
+- Which states have the highest average review scores?
+- How are customers geographically distributed?
+- How are sellers geographically distributed?
+- Which regions incur the highest freight costs?
+
 # Business Questions Progress
 
 | Status | Question                                                                      |

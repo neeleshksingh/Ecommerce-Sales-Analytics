@@ -94,3 +94,13 @@
 | ----------------------------- | --------- | -------------------------------------------- |
 | product_category_name         | VARCHAR   | Product category name in Portuguese.         |
 | product_category_name_english | VARCHAR   | English translation of the product category. |
+
+# Geolocation
+
+| Column                      | Data Type     | Description                                         |
+| --------------------------- | ------------- | --------------------------------------------------- |
+| geolocation_zip_code_prefix | INTEGER       | ZIP code prefix representing a geographical region. |
+| geolocation_lat             | DECIMAL(10,8) | Latitude of the location.                           |
+| geolocation_lng             | DECIMAL(11,8) | Longitude of the location.                          |
+| geolocation_city            | VARCHAR       | City corresponding to the ZIP code prefix.          |
+| geolocation_state           | CHAR(2)       | State corresponding to the ZIP code prefix.         |

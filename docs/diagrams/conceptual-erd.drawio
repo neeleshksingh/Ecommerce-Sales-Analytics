@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net">
   <diagram name="Page-1" id="Ya1MnUzVT4awtjl8N5FC">
-    <mxGraphModel dx="1414" dy="897" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="885" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -110,6 +110,27 @@
         </mxCell>
         <mxCell id="UD0dAOTV-ukoYPt3SoJt-8" parent="1" style="whiteSpace=wrap;html=1;align=center;" value="Product Category translation" vertex="1">
           <mxGeometry height="40" width="170" x="107.5" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="st_EPuFo68vVZLoNia7G-8" edge="1" parent="1" source="st_EPuFo68vVZLoNia7G-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="st_EPuFo68vVZLoNia7G-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="st_EPuFo68vVZLoNia7G-2" parent="1" style="whiteSpace=wrap;html=1;align=center;" value="Customers" vertex="1">
+          <mxGeometry height="40" width="100" x="107.5" y="800" as="geometry" />
+        </mxCell>
+        <mxCell id="st_EPuFo68vVZLoNia7G-3" parent="1" style="whiteSpace=wrap;html=1;align=center;" value="Located In" vertex="1">
+          <mxGeometry height="40" width="100" x="320" y="800" as="geometry" />
+        </mxCell>
+        <mxCell id="st_EPuFo68vVZLoNia7G-5" parent="1" style="whiteSpace=wrap;html=1;align=center;" value="Geolocation" vertex="1">
+          <mxGeometry height="40" width="100" x="480" y="880" as="geometry" />
+        </mxCell>
+        <mxCell id="st_EPuFo68vVZLoNia7G-9" edge="1" parent="1" source="st_EPuFo68vVZLoNia7G-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="st_EPuFo68vVZLoNia7G-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="st_EPuFo68vVZLoNia7G-6" parent="1" style="whiteSpace=wrap;html=1;align=center;" value="Sellers" vertex="1">
+          <mxGeometry height="40" width="100" x="107.5" y="960" as="geometry" />
+        </mxCell>
+        <mxCell id="st_EPuFo68vVZLoNia7G-7" parent="1" style="whiteSpace=wrap;html=1;align=center;" value="Located In" vertex="1">
+          <mxGeometry height="40" width="100" x="320" y="960" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

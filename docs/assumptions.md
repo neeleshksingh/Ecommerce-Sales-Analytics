@@ -51,3 +51,10 @@
 - A category can be associated with multiple products.
 - Products without a matching category translation may appear untranslated in reports.
 - Category names should remain consistent across the dataset.
+
+## Geolocation
+
+- A ZIP code prefix may appear multiple times in the dataset.
+- Customers and sellers are associated with geographical regions using ZIP code prefixes.
+- Latitude and longitude represent approximate locations within a ZIP code prefix.
+- Geolocation data is used for reporting and analysis rather than transactional processing.

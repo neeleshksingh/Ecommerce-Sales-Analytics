@@ -22,20 +22,23 @@ The ERD is built incrementally after each table is analyzed. This ensures every 
 - Order Payments
 - Order Reviews
 - Product Category Translation
+- Geolocation
 
 ---
 
 ## Current Relationships
 
-| Parent Table                 | Child Table    | Relationship      |
-| ---------------------------- | -------------- | ----------------- |
-| Customers                    | Orders         | One-to-Many (1:N) |
-| Orders                       | Order Items    | One-to-Many (1:N) |
-| Orders                       | Order Payments | One-to-Many (1:N) |
-| Orders                       | Order Reviews  | One-to-One (0..1) |
-| Product Category Translation | Products       | One-to-Many (1:N) |
-| Products                     | Order Items    | One-to-Many (1:N) |
-| Sellers                      | Order Items    | One-to-Many (1:N) |
+| Parent Table                 | Child Table              | Relationship      |
+| ---------------------------- | ------------------------ | ----------------- |
+| Customers                    | Orders                   | One-to-Many (1:N) |
+| Orders                       | Order Items              | One-to-Many (1:N) |
+| Orders                       | Order Payments           | One-to-Many (1:N) |
+| Orders                       | Order Reviews            | One-to-One (0..1) |
+| Product Category Translation | Products                 | One-to-Many (1:N) |
+| Products                     | Order Items              | One-to-Many (1:N) |
+| Sellers                      | Order Items              | One-to-Many (1:N) |
+| Geolocation                  | Customers _(Conceptual)_ | One-to-Many (1:N) |
+| Geolocation                  | Sellers _(Conceptual)_   | One-to-Many (1:N) |
 
 ---
 
@@ -47,43 +50,44 @@ The ERD is built incrementally after each table is analyzed. This ensures every 
                              Places Orders
                                    │
                                  1:N
-                                   │
                                    ▼
                                 Orders
-             ┌─────────────────────┼─────────────────────┐
-             │                     │                     │
-          Contains              Paid By             Reviewed By
-             │                     │                     │
-            1:N                   1:N                1:0..1
-             │                     │                     │
-             ▼                     ▼                     ▼
-       Order Items         Order Payments      Order Reviews
-             ▲
-             │
-          Refers To
-             │
-             ▼
-          Products
-             ▲
-             │
-     Categorized As
-             │
-             ▼
-Product Category Translation
+          ┌─────────────────────┼─────────────────────┐
+          │                     │                     │
+      Contains              Paid By             Reviewed By
+          │                     │                     │
+         1:N                   1:N                1:0..1
+          ▼                     ▼                     ▼
+    Order Items         Order Payments      Order Reviews
+          │
+     ┌────┴────┐
+     │         │
+Belongs To   Sold By
+ Category      │
+     │         ▼
+     ▼      Sellers
+ Products
+     │
+Categorized As
+     │
+     ▼
+Product Category
+ Translation
 
-             ▲
-             │
-          Sold By
-             │
-             ▼
-          Sellers
+Customers ───── Located In ─────┐
+                                │
+                                ▼
+                          Geolocation
+                                ▲
+                                │
+Sellers ───── Located In ───────┘
 ```
 
 ---
 
 ## Pending Tables
 
-- Geolocation
+- No pending tables
 
 ---
 
@@ -97,6 +101,7 @@ Product Category Translation
 | Version 4 | Added Order Payments               |
 | Version 5 | Added Order Reviews                |
 | Version 6 | Added Product Category Translation |
+| Version 7 | Added Geolocation                  |
 
 ---
 
@@ -109,4 +114,3 @@ Product Category Translation
 - One product can appear in multiple order items.
 - One seller can fulfill multiple order items.
 - The Physical ERD will be created after the PostgreSQL schema is finalized.
-
