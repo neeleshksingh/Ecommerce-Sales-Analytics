@@ -20,6 +20,7 @@ The ERD is built incrementally after each table is analyzed. This ensures every 
 - Products
 - Sellers
 - Order Payments
+- Order Reviews
 
 ---
 
@@ -30,6 +31,7 @@ The ERD is built incrementally after each table is analyzed. This ensures every 
 | Customers    | Orders         | One-to-Many (1:N) |
 | Orders       | Order Items    | One-to-Many (1:N) |
 | Orders       | Order Payments | One-to-Many (1:N) |
+| Orders       | Order Reviews  | One-to-One (0..1) |
 | Products     | Order Items    | One-to-Many (1:N) |
 | Sellers      | Order Items    | One-to-Many (1:N) |
 
@@ -38,29 +40,30 @@ The ERD is built incrementally after each table is analyzed. This ensures every 
 ## Relationship Summary
 
 ```text
-                         Customers
-                              │
-                            1:N
-                              │
-                              ▼
-                           Orders
-                      ┌───────┴────────┐
-                    1:N               1:N
-                      │                │
-                      ▼                ▼
-                Order Items     Order Payments
-                 ▲         ▲
-               N:1       N:1
-                 │         │
-                 │         │
-             Products   Sellers
+                              Customers
+                                  │
+                                1:N
+                                  │
+                                  ▼
+                               Orders
+          ┌───────────────────────┼────────────────────────┐
+          │                       │                        │
+        1:N                     1:N                    1:0..1
+          │                       │                        │
+          ▼                       ▼                        ▼
+    Order Items           Order Payments          Order Reviews
+      ▲       ▲
+      │       │
+    N:1     N:1
+      │       │
+      ▼       ▼
+  Products  Sellers
 ```
 
 ---
 
 ## Pending Tables
 
-- Order Reviews
 - Geolocation
 - Product Category Translation
 
@@ -74,6 +77,7 @@ The ERD is built incrementally after each table is analyzed. This ensures every 
 | Version 2 | Added Products                   |
 | Version 3 | Added Sellers                    |
 | Version 4 | Added Order Payments             |
+| Version 5 | Added Order Reviews              |
 
 ---
 

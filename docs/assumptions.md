@@ -36,6 +36,11 @@
 - Revenue calculations should use the payment_value column.
 - Payment information is stored separately to normalize transaction data.
 
-## Reviews
+## Order Reviews
 
-(To be filled later)
+- Each review is associated with one order.
+- An order may or may not receive a review.
+- Review scores are expected to range from 1 to 5.
+- Review comments are optional.
+- Review creation occurs after order delivery.
+- The answer timestamp should not be earlier than the review creation date.

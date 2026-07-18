@@ -21,6 +21,19 @@
 20. Which seller has the highest ordered product?
 21. Which seller in the state has the maximum order count and highest review?
 
+## Customer Reviews
+
+- What is the average review score?
+- How many 5-star reviews were received?
+- What percentage of reviews are positive (4–5 stars)?
+- What percentage of reviews are negative (1–2 stars)?
+- Which sellers receive the highest average ratings?
+- Which product categories receive the highest ratings?
+- Do faster deliveries result in higher review scores?
+- Which states have the highest customer satisfaction?
+- Which months receive the highest average review scores?
+- How many completed orders were never reviewed?
+
 # Business Questions Progress
 
 | Status | Question                                                                      |

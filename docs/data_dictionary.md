@@ -75,3 +75,15 @@
 | payment_type         | VARCHAR       | Payment method used by the customer.               |
 | payment_installments | INTEGER       | Number of installments selected for the payment.   |
 | payment_value        | DECIMAL(10,2) | Amount paid in the payment transaction.            |
+
+# Order Reviews
+
+| Column                  | Data Type | Description                                             |
+| ----------------------- | --------- | ------------------------------------------------------- |
+| review_id               | VARCHAR   | Unique identifier of the review.                        |
+| order_id                | VARCHAR   | Identifier of the reviewed order.                       |
+| review_score            | INTEGER   | Rating given by the customer (1–5).                     |
+| review_comment_title    | VARCHAR   | Title of the review.                                    |
+| review_comment_message  | TEXT      | Detailed review message.                                |
+| review_creation_date    | TIMESTAMP | Date when the review was created.                       |
+| review_answer_timestamp | TIMESTAMP | Timestamp when the review was answered by the platform. |

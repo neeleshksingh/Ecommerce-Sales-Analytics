@@ -616,3 +616,31 @@ Use customer_unique_id.
 Assuming Products contains inventory or stock.
 
 It only contains descriptive metadata.
+
+## Order Reviews
+
+### Why is the review table separated from the orders table?
+
+Reviews are optional and represent customer feedback after the purchase. Separating them keeps the database normalized and avoids storing nullable review columns in the Orders table.
+
+---
+
+### Why are review comments nullable?
+
+Customers can choose to provide only a rating without writing a review.
+
+---
+
+### Why is review_answer_timestamp stored?
+
+It helps measure the platform's responsiveness to customer feedback and enables response-time analysis.
+
+---
+
+### Common SQL Questions
+
+- Calculate average review score.
+- Find the percentage of 5-star reviews.
+- Identify orders without reviews.
+- Rank sellers based on average customer ratings.
+- Compare delivery performance with review scores.
