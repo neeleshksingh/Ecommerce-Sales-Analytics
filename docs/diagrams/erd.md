@@ -110,4 +110,3 @@ Product Category Translation
 - One seller can fulfill multiple order items.
 - The Physical ERD will be created after the PostgreSQL schema is finalized.
 
-This is the test message.
