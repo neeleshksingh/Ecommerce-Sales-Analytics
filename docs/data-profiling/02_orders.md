@@ -14,16 +14,16 @@ Each row represents **one unique customer order** and tracks its complete journe
 
 ## Columns
 
-| Column | Description |
-|---------|-------------|
-| order_id | Unique identifier for each order. |
-| customer_id | Customer who placed the order. References the Customers table. |
-| order_status | Current status of the order (Delivered, Shipped, Processing, Cancelled, etc.). |
-| order_purchase_timestamp | Date and time when the customer placed the order. |
-| order_approved_at | Date and time when the order/payment was approved. |
-| order_delivered_carrier_date | Date and time when the seller handed the package to the logistics carrier. |
-| order_delivered_customer_date | Date and time when the customer received the order. |
-| order_estimated_delivery_date | Estimated delivery date promised to the customer. |
+| Column                        | Description                                                                    |
+| ----------------------------- | ------------------------------------------------------------------------------ |
+| order_id                      | Unique identifier for each order.                                              |
+| customer_id                   | Customer who placed the order. References the Customers table.                 |
+| order_status                  | Current status of the order (Delivered, Shipped, Processing, Cancelled, etc.). |
+| order_purchase_timestamp      | Date and time when the customer placed the order.                              |
+| order_approved_at             | Date and time when the order/payment was approved.                             |
+| order_delivered_carrier_date  | Date and time when the seller handed the package to the logistics carrier.     |
+| order_delivered_customer_date | Date and time when the customer received the order.                            |
+| order_estimated_delivery_date | Estimated delivery date promised to the customer.                              |
 
 ---
 
@@ -35,22 +35,22 @@ Each row represents **one unique customer order** and tracks its complete journe
 
 ## Foreign Keys
 
-| Column | References |
-|---------|------------|
+| Column      | References            |
+| ----------- | --------------------- |
 | customer_id | Customers.customer_id |
 
 ---
 
 ## Expected Data Types
 
-| Column | Data Type |
-|---------|-----------|
-| order_id | VARCHAR |
-| customer_id | VARCHAR |
-| order_status | VARCHAR |
-| order_purchase_timestamp | TIMESTAMP |
-| order_approved_at | TIMESTAMP |
-| order_delivered_carrier_date | TIMESTAMP |
+| Column                        | Data Type |
+| ----------------------------- | --------- |
+| order_id                      | VARCHAR   |
+| customer_id                   | VARCHAR   |
+| order_status                  | VARCHAR   |
+| order_purchase_timestamp      | TIMESTAMP |
+| order_approved_at             | TIMESTAMP |
+| order_delivered_carrier_date  | TIMESTAMP |
 | order_delivered_customer_date | TIMESTAMP |
 | order_estimated_delivery_date | TIMESTAMP |
 
