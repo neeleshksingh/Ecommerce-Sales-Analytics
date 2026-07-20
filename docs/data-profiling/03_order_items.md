@@ -2,27 +2,27 @@
 
 ## Purpose
 
-The *Order Items* table stores detailed information about every product included in a customer order. It records the purchased product, seller, selling price, freight cost, and shipping deadline. This table is essential for product-level, seller-level, revenue, and shipping analysis.
+The _Order Items_ table stores detailed information about every product included in a customer order. It records the purchased product, seller, selling price, freight cost, and shipping deadline. This table is essential for product-level, seller-level, revenue, and shipping analysis.
 
 ---
 
 ## One Row Represents
 
-Each row represents *one product within one customer order*. If an order contains multiple products, each product is stored as a separate row.
+Each row represents _one product within one customer order_. If an order contains multiple products, each product is stored as a separate row.
 
 ---
 
 ## Columns
 
-| Column | Description |
-|---------|-------------|
-| order_id | References the customer order. |
-| order_item_id | Sequential number of the item within an order. |
-| product_id | Purchased product identifier. |
-| seller_id | Seller who fulfilled the product. |
+| Column              | Description                                                                  |
+| ------------------- | ---------------------------------------------------------------------------- |
+| order_id            | References the customer order.                                               |
+| order_item_id       | Sequential number of the item within an order.                               |
+| product_id          | Purchased product identifier.                                                |
+| seller_id           | Seller who fulfilled the product.                                            |
 | shipping_limit_date | Deadline by which the seller must hand the product to the logistics carrier. |
-| price | Selling price of the product at the time of purchase. |
-| freight_value | Shipping charge associated with the product. |
+| price               | Selling price of the product at the time of purchase.                        |
+| freight_value       | Shipping charge associated with the product.                                 |
 
 ---
 
@@ -36,25 +36,25 @@ Composite Primary Key
 
 ## Foreign Keys
 
-| Column | References |
-|---------|------------|
-| order_id | Orders.order_id |
+| Column     | References          |
+| ---------- | ------------------- |
+| order_id   | Orders.order_id     |
 | product_id | Products.product_id |
-| seller_id | Sellers.seller_id |
+| seller_id  | Sellers.seller_id   |
 
 ---
 
 ## Expected Data Types
 
-| Column | Data Type |
-|---------|-----------|
-| order_id | VARCHAR |
-| order_item_id | INTEGER |
-| product_id | VARCHAR |
-| seller_id | VARCHAR |
-| shipping_limit_date | TIMESTAMP |
-| price | DECIMAL(10,2) |
-| freight_value | DECIMAL(10,2) |
+| Column              | Data Type     |
+| ------------------- | ------------- |
+| order_id            | VARCHAR       |
+| order_item_id       | INTEGER       |
+| product_id          | VARCHAR       |
+| seller_id           | VARCHAR       |
+| shipping_limit_date | TIMESTAMP     |
+| price               | DECIMAL(10,2) |
+| freight_value       | DECIMAL(10,2) |
 
 ---
 
@@ -155,11 +155,11 @@ This table enables detailed product-level analysis. It supports revenue calculat
 ## Relationships
 
 Orders
-    │
-    ▼
+│
+▼
 Order Items
-    ├──► Products
-    └──► Sellers
+├──► Products
+└──► Sellers
 
 ---
 
