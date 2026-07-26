@@ -1,7 +1,6 @@
 from pathlib import Path
 
 import pandas as pd
-from sqlalchemy.exc import SQLAlchemyError
 
 from etl.database import get_engine
 
@@ -34,22 +33,13 @@ def load_csv_to_table(
             con=engine,
             if_exists="append",
             index=False,
-            method="multi",
+            # method="multi",   # Temporarily removed for easier debugging
         )
 
         print(f"✅ Loaded into '{table_name}'")
 
-    except SQLAlchemyError as e:
-        print(f"❌ Failed to load into '{table_name}'")
-
-        if hasattr(e, "orig"):
-            print(f"Reason: {e.orig}")
-        else:
-            print(f"Reason: {e}")
-
-        raise
-
     except Exception as e:
-        print("❌ Unexpected error")
+        print(f"\n❌ Failed while loading '{table_name}'")
+        print(type(e))
         print(e)
         raise
