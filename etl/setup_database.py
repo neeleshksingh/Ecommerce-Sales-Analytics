@@ -1,16 +1,19 @@
-import os
+from pathlib import Path
 
 from sqlalchemy import text
 
 from etl.config import DB_NAME
 from etl.database import get_engine
-from pathlib import Path
+from etl.sql_runner import run_sql_folder
+
 
 def create_database():
     engine = get_engine("postgres")
 
     with engine.connect() as connection:
-        connection = connection.execution_options(isolation_level="AUTOCOMMIT")
+        connection = connection.execution_options(
+            isolation_level="AUTOCOMMIT"
+        )
 
         result = connection.execute(
             text(
@@ -27,17 +30,14 @@ def create_database():
             )
             print(f"✅ Database '{DB_NAME}' created successfully.")
 
-def get_schema_files():
+
+if __name__ == "__main__":
+    create_database()
+
     project_root = Path(__file__).resolve().parent.parent
 
     schema_folder = project_root / "sql" / "01_schema"
 
-    return sorted(schema_folder.glob("*.sql"))
-            
-if __name__ == "__main__":
-    create_database()
+    run_sql_folder(DB_NAME, schema_folder)
 
-    print("\nSchema files:")
-
-    for file in get_schema_files():
-        print(file.name)
+    print("\n✅ Database setup completed successfully!")
