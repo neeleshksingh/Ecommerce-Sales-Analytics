@@ -16,6 +16,8 @@ def get_engine(database_name=DB_NAME):
         f"@{DB_HOST}:{DB_PORT}/{database_name}"
     )
 
+    print(f"Database URL: {database_url}")
+
     return create_engine(
         database_url,
         future=True,
