@@ -18,7 +18,7 @@ CREATE TABLE order_reviews
     review_answer_timestamp TIMESTAMP,
 
     CONSTRAINT pk_order_reviews
-        PRIMARY KEY (review_id)
+        PRIMARY KEY (review_id, order_id)
 );
 
 -- Constraints
