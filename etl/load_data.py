@@ -12,7 +12,7 @@ CSV_TO_TABLE = {
     "olist_orders_dataset.csv": "orders",
     "olist_products_dataset.csv": "products",
     "olist_sellers_dataset.csv": "sellers",
-    "product_category_name_translation.csv": "product_category_translation",
+    "olist_product_category_name_translation.csv": "product_category_translation",
 }
 
 project_root = Path(__file__).resolve().parent.parent
