@@ -18,12 +18,13 @@ __pycache__/
 .venv/
 venv/
 env/
+__pycache__/
+*.pyc
 
 # ==========================
 # Environment Variables
 # ==========================
 .env
-.env.*
 
 # ==========================
 # PostgreSQL
@@ -42,6 +43,7 @@ env/
 # ==========================
 *.tmp
 *.temp
+test.sql
 
 # ==========================
 # Power BI
