@@ -11,10 +11,23 @@ ADD CONSTRAINT fk_orders_customers
 FOREIGN KEY (customer_id)
 REFERENCES customers(customer_id);
 
-ALTER TABLE products
-ADD CONSTRAINT fk_products_product_category_translation
-FOREIGN KEY (product_category_name)
-REFERENCES product_category_translation(product_category_name);
+/*
+NOTE:
+The foreign key between products.product_category_name and
+product_category_translation.product_category_name is intentionally omitted.
+
+Reason:
+The Olist dataset contains category values
+('pc_gamer' and 'portateis_cozinha_e_preparadores_de_alimentos')
+that are not present in the translation table.
+
+Enforcing the constraint would reject valid source data.
+*/
+
+-- ALTER TABLE products
+-- ADD CONSTRAINT fk_products_product_category_translation
+-- FOREIGN KEY (product_category_name)
+-- REFERENCES product_category_translation(product_category_name);
 
 ALTER TABLE order_reviews
 ADD CONSTRAINT fk_order_reviews_orders

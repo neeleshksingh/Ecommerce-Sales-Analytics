@@ -58,3 +58,17 @@
 - Customers and sellers are associated with geographical regions using ZIP code prefixes.
 - Latitude and longitude represent approximate locations within a ZIP code prefix.
 - Geolocation data is used for reporting and analysis rather than transactional processing.
+
+## Payment Value Validation
+
+Business Rule:
+- payment_value must not be negative.
+
+Dataset Observation:
+- The Olist dataset contains 9 payment records with payment_value = 0.00.
+- These records are associated with voucher and not_defined payment types.
+- They are treated as valid dataset exceptions and are not considered data quality issues.
+
+Validation Rule:
+- payment_value < 0 → Invalid
+- payment_value = 0 → Valid business exception
