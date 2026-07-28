@@ -22,9 +22,16 @@ ALTER TABLE order_payments
 ADD CONSTRAINT chk_order_payments_payment_value
 CHECK (payment_value >= 0);
 
-ALTER TABLE order_payments
-ADD CONSTRAINT chk_order_payments_payment_installments
-CHECK (payment_installments >= 1);
+/*
+NOTE:
+The Olist dataset contains two records with payment_installments = 0.
+Since the project preserves the raw source data, this CHECK constraint
+is intentionally omitted.
+This anomaly is documented in the data validation and cleaning phases.
+*/
+-- ALTER TABLE order_payments
+-- ADD CONSTRAINT chk_order_payments_payment_installments
+-- CHECK (payment_installments >= 1);
 
 ------------------------------------------------------------------------------
 -- products
@@ -32,7 +39,7 @@ CHECK (payment_installments >= 1);
 
 ALTER TABLE products
 ADD CONSTRAINT chk_products_product_weight_g
-CHECK (product_weight_g >= 0);
+CHECK (product_weight_g IS NULL OR product_weight_g >= 0);
 
 ALTER TABLE products
 ADD CONSTRAINT chk_products_product_length_cm
@@ -69,3 +76,12 @@ CHECK (price >= 0);
 ALTER TABLE order_items
 ADD CONSTRAINT chk_order_items_freight_value
 CHECK (freight_value >= 0);
+
+SELECT DISTINCT payment_installments, COUNT(*) AS records
+FROM order_payments
+GROUP BY payment_installments
+ORDER BY payment_installments;
+
+SELECT *
+FROM order_payments
+WHERE payment_installments = 0;
