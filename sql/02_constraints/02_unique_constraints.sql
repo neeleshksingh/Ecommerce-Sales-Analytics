@@ -16,3 +16,5 @@ Dependencies: All tables in 01_schema must exist before executing this script.
 -- because the business rule allows at most one review per order.
 -- However, this will be validated in the data validation phase before
 -- enforcing the constraint.
+
+SELECT 'No additional UNIQUE constraints required.';

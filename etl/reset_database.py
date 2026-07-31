@@ -4,7 +4,7 @@ from etl.config import DB_NAME
 from etl.database import get_engine
 
 
-def reset_database():
+def main():
     engine = get_engine(DB_NAME)
 
     with engine.connect() as connection:
@@ -25,4 +25,4 @@ def reset_database():
 
 
 if __name__ == "__main__":
-    reset_database()
+    main()

@@ -20,7 +20,7 @@ project_root = Path(__file__).resolve().parent.parent
 data_folder = project_root / "data" / "raw"
 
 
-def load_all_data():
+def main():
     for csv_name, table_name in CSV_TO_TABLE.items():
 
         csv_path = data_folder / csv_name
@@ -35,6 +35,6 @@ def load_all_data():
 if __name__ == "__main__":
     print("========== Loading Data ==========")
 
-    load_all_data()
+    main()
 
     print("\n✅ All datasets loaded successfully!")

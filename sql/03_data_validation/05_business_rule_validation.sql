@@ -1,4 +1,4 @@
-review_score
+-- review_score
 
 select review_score, count(*)
 
