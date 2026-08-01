@@ -4,6 +4,7 @@ from etl.load_data import main as load_data
 from etl.run_validation import main as run_validation
 from etl.run_constraints import main as run_constraints
 from etl.run_cleaning import main as run_cleaning
+from etl.run_indexes import main as run_indexes
 
 PIPELINE = [
     ("Reset Database", reset_database),
@@ -11,7 +12,8 @@ PIPELINE = [
     ("Load Data", load_data),
     ("Run Validation", run_validation),
     ("Apply Constraints", run_constraints),
-    ("Run Cleaning",run_cleaning)
+    ("Run Cleaning",run_cleaning),
+    ("Run Indexes",run_indexes)
 ]
 
 
