@@ -19,3 +19,10 @@ CREATE TABLE customers
 );
 -- Constraints
 -- Notes
+
+
+
+
+
+
+
