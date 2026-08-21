@@ -317,3 +317,89 @@ WHERE
     sr.total_revenue > sa.state_average_revenue
 ORDER BY
     revenue_difference DESC;
+
+
+/*
+===============================================================================
+Question    : Monthly Revenue Trend & Growth
+Description : Analyzes monthly revenue performance and calculates
+              month-over-month revenue changes and growth percentages.
+===============================================================================
+*/
+
+WITH monthly_revenue AS
+(
+    SELECT
+        DATE_TRUNC('month', o.order_purchase_timestamp) AS month,
+        ROUND(SUM(oi.price)::numeric, 2) AS monthly_revenue
+    FROM orders AS o
+    INNER JOIN order_items AS oi
+        ON o.order_id = oi.order_id
+    GROUP BY
+        month
+),
+
+monthly_comparison AS
+(
+    SELECT
+        month,
+        monthly_revenue,
+        LAG(monthly_revenue) OVER(ORDER BY month) AS previous_month_revenue
+
+    FROM monthly_revenue
+)
+
+SELECT
+    month,
+    monthly_revenue,
+    previous_month_revenue,
+    ROUND((monthly_revenue - previous_month_revenue)::numeric, 2) AS revenue_change,
+    ROUND(((monthly_revenue - previous_month_revenue) / NULLIF(previous_month_revenue, 0) * 100)::numeric, 2) AS revenue_growth_percentage
+
+FROM monthly_comparison
+WHERE
+    previous_month_revenue IS NOT NULL
+ORDER BY
+    month;
+
+
+/*
+===============================================================================
+Question    : Product Category Contribution Over Time
+Description : Calculates monthly revenue for each product category and
+              determines each category's percentage contribution to the
+              total revenue of that month.
+===============================================================================
+*/
+
+WITH category_revenue_cte AS (
+    SELECT
+        DATE_TRUNC('month', o.order_purchase_timestamp) AS month,
+        p.product_category_name_english AS product_category,
+        ROUND(SUM(oi.price)::numeric, 2) AS category_revenue
+    FROM orders o
+    JOIN order_items oi
+        ON o.order_id = oi.order_id
+    JOIN vw_products p
+        ON p.product_id = oi.product_id
+    GROUP BY month, p.product_category_name_english
+),
+monthly_total_revenue_cte AS (
+    SELECT
+        month,
+        product_category,
+        category_revenue,
+        SUM(category_revenue) OVER(PARTITION BY month) AS monthly_total_revenue
+    FROM category_revenue_cte
+)
+
+SELECT 
+    month,
+    product_category,
+    category_revenue,
+    monthly_total_revenue,
+    ROUND(((category_revenue / NULLIF(monthly_total_revenue, 0)) * 100) ::numeric, 2) AS revenue_contribution_percentage
+FROM monthly_total_revenue_cte
+ORDER BY
+    month,
+    revenue_contribution_percentage DESC;
