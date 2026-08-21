@@ -317,3 +317,109 @@ WHERE
     sr.total_revenue > sa.state_average_revenue
 ORDER BY
     revenue_difference DESC;
+
+
+
+
+/*
+===============================================================================
+Question    : Customer Cohort Analysis
+Description : Groups customers into cohorts based on the month of their
+              first purchase and calculates the number of customers in
+              each cohort.
+===============================================================================
+*/
+
+WITH customer_first_purchase AS
+(
+    SELECT
+        c.customer_unique_id,
+        MIN(
+            o.order_purchase_timestamp
+        ) AS first_purchase_date
+    FROM customers AS c
+    INNER JOIN orders AS o
+        ON c.customer_id = o.customer_id
+    GROUP BY
+        c.customer_unique_id
+),
+customer_cohorts AS
+(
+    SELECT
+        customer_unique_id,
+        DATE_TRUNC(
+            'month',
+            first_purchase_date
+        ) AS cohort_month
+    FROM customer_first_purchase
+)
+SELECT
+    cohort_month,
+    COUNT(customer_unique_id) AS customer_count
+FROM customer_cohorts
+GROUP BY
+    cohort_month
+ORDER BY
+    cohort_month;
+
+
+
+/*
+===============================================================================
+Question    : High-Value At-Risk Customers
+Description : Identifies customers who have spent more than the average
+              customer but have not purchased within the last 90 days.
+===============================================================================
+*/
+
+WITH customer_metrics AS
+(
+    SELECT
+        c.customer_unique_id,
+        COUNT(DISTINCT o.order_id) AS total_orders,
+        ROUND(
+            SUM(oi.price)::numeric,
+            2
+        ) AS total_spent,
+        MAX(
+            o.order_purchase_timestamp::date
+        ) AS last_purchase_date
+    FROM customers AS c
+    INNER JOIN orders AS o
+        ON c.customer_id = o.customer_id
+    INNER JOIN order_items AS oi
+        ON o.order_id = oi.order_id
+    GROUP BY
+        c.customer_unique_id
+),
+customer_recency AS
+(
+    SELECT
+        customer_unique_id,
+        total_orders,
+        total_spent,
+        last_purchase_date,
+        CURRENT_DATE - last_purchase_date AS recency_days
+    FROM customer_metrics
+),
+customer_average AS
+(
+    SELECT
+        *,
+        AVG(total_spent) OVER() AS average_customer_spending
+    FROM customer_recency
+)
+SELECT
+    customer_unique_id,
+    total_orders,
+    total_spent,
+    last_purchase_date,
+    recency_days,
+    'High-Value At-Risk' AS customer_status
+FROM customer_average
+WHERE
+    total_spent > average_customer_spending
+    AND recency_days > 90
+ORDER BY
+    total_spent DESC;
+
