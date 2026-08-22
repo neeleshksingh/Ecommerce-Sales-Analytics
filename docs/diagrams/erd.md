@@ -1,5 +1,7 @@
 # Entity Relationship Diagram
 
+> **Audit note (2026-08-21):** this file and the Draw.io images preserve the project's conceptual design history. For the implemented physical model, use [`../data_model.md`](../data_model.md). In particular, the product-category FK is not enforced, the review PK is (`review_id`, `order_id`), repeated reviews per order exist, and geolocation links are conceptual.
+
 ## Overview
 
 This document tracks the evolution of the Entity Relationship Diagram (ERD) throughout the project.

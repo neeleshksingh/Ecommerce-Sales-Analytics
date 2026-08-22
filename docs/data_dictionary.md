@@ -1,106 +1,79 @@
-# Customers
+# Data dictionary
 
-| Column                   | Data Type | Description                                                                   |
-| ------------------------ | --------- | ----------------------------------------------------------------------------- |
-| customer_id              | VARCHAR   | Unique identifier for each customer record.                                   |
-| customer_unique_id       | VARCHAR   | Unique identifier representing the actual customer across multiple purchases. |
-| customer_zip_code_prefix | INTEGER   | ZIP code prefix of the customer's location.                                   |
-| customer_city            | VARCHAR   | Customer's city.                                                              |
-| customer_state           | CHAR(2)   | Customer's state.                                                             |
+Definitions follow `sql/01_schema`. `NN` means `NOT NULL`; key status reflects the physical schema. Source misspellings `lenght` are preserved for load compatibility.
 
----
+## Customers and sellers
 
-# Orders
+| Table | Column | Type | Null/key | Meaning |
+|---|---|---|---|---|
+| customers | customer_id | varchar(50) | NN, PK | Order-associated customer record ID |
+| customers | customer_unique_id | varchar(50) | NN | Cross-order customer identity |
+| customers | customer_zip_code_prefix | integer | NN | Customer ZIP prefix |
+| customers | customer_city | varchar(100) | NN | Source city; conditionally trimmed |
+| customers | customer_state | char(2) | NN | State code; conditionally trimmed |
+| sellers | seller_id | varchar(50) | NN, PK | Seller identity |
+| sellers | seller_zip_code_prefix | integer | NN | Seller ZIP prefix |
+| sellers | seller_city | varchar(100) | NN | Source city; conditionally trimmed |
+| sellers | seller_state | char(2) | NN | State code; conditionally trimmed |
 
-| Column                        | Data Type | Description                                                  |
-| ----------------------------- | --------- | ------------------------------------------------------------ |
-| order_id                      | VARCHAR   | Unique identifier of the order.                              |
-| customer_id                   | VARCHAR   | Identifier of the customer who placed the order.             |
-| order_status                  | VARCHAR   | Current status of the order.                                 |
-| order_purchase_timestamp      | TIMESTAMP | Date and time when the order was placed.                     |
-| order_approved_at             | TIMESTAMP | Date and time when the payment was approved.                 |
-| order_delivered_carrier_date  | TIMESTAMP | Date and time when the order was handed over to the carrier. |
-| order_delivered_customer_date | TIMESTAMP | Date and time when the customer received the order.          |
-| order_estimated_delivery_date | TIMESTAMP | Estimated delivery date provided to the customer.            |
+## Orders, items, payments, and reviews
 
----
+| Table | Column | Type | Null/key | Meaning |
+|---|---|---|---|---|
+| orders | order_id | varchar(50) | NN, PK | Order identity |
+| orders | customer_id | varchar(50) | NN, FK | References `customers.customer_id` |
+| orders | order_status | varchar(20) | NN | Lifecycle status; conditionally trimmed |
+| orders | order_purchase_timestamp | timestamp | NN | Purchase timestamp |
+| orders | order_approved_at | timestamp | nullable | Approval timestamp |
+| orders | order_delivered_carrier_date | timestamp | nullable | Carrier handoff timestamp |
+| orders | order_delivered_customer_date | timestamp | nullable | Customer delivery timestamp |
+| orders | order_estimated_delivery_date | timestamp | NN | Promised delivery timestamp |
+| order_items | order_id | varchar(50) | NN, PK/FK | Order; first part of line key |
+| order_items | order_item_id | integer | NN, PK | Line sequence within order |
+| order_items | product_id | varchar(50) | NN, FK | Purchased product |
+| order_items | seller_id | varchar(50) | NN, FK | Fulfilling seller |
+| order_items | shipping_limit_date | timestamp | NN | Seller shipping deadline |
+| order_items | price | decimal(10,2) | NN | Item selling price; check `>= 0` |
+| order_items | freight_value | decimal(10,2) | NN | Item freight charge; check `>= 0` |
+| order_payments | order_id | varchar(50) | NN, PK/FK | Paid order |
+| order_payments | payment_sequential | integer | NN, PK | Payment sequence within order |
+| order_payments | payment_type | varchar(50) | NN | Payment method |
+| order_payments | payment_installments | integer | NN | Installment count; zero permitted |
+| order_payments | payment_value | decimal(10,2) | NN | Transaction amount; check `>= 0` |
+| order_reviews | review_id | varchar(50) | NN, PK | Review ID; first composite key part |
+| order_reviews | order_id | varchar(50) | NN, PK/FK | Reviewed order; second key part |
+| order_reviews | review_score | integer | NN | Rating; check 1–5 |
+| order_reviews | review_comment_title | varchar(100) | nullable | Optional title |
+| order_reviews | review_comment_message | text | nullable | Optional body |
+| order_reviews | review_creation_date | timestamp | NN | Review creation timestamp |
+| order_reviews | review_answer_timestamp | timestamp | nullable | Platform answer timestamp |
 
-# Order Items
+## Products and category translation
 
-| Column              | Data Type     | Description                                                 |
-| ------------------- | ------------- | ----------------------------------------------------------- |
-| order_id            | VARCHAR       | Identifier of the order.                                    |
-| order_item_id       | INTEGER       | Sequential identifier of the product within the same order. |
-| product_id          | VARCHAR       | Identifier of the purchased product.                        |
-| seller_id           | VARCHAR       | Identifier of the seller fulfilling the order item.         |
-| shipping_limit_date | TIMESTAMP     | Deadline by which the seller should ship the product.       |
-| price               | DECIMAL(10,2) | Selling price of the product at the time of purchase.       |
-| freight_value       | DECIMAL(10,2) | Shipping charge associated with the order item.             |
+| Table | Column | Type | Null/key | Meaning |
+|---|---|---|---|---|
+| products | product_id | varchar(50) | NN, PK | Product identity |
+| products | product_category_name | varchar(100) | nullable | Portuguese category; trimmed; no FK |
+| products | product_name_lenght | integer | nullable | Source-provided name length |
+| products | product_description_lenght | integer | nullable | Source-provided description length |
+| products | product_photos_qty | integer | nullable | Catalog photo count |
+| products | product_weight_g | integer | nullable | Weight in grams |
+| products | product_length_cm | integer | nullable | Length in cm |
+| products | product_height_cm | integer | nullable | Height in cm |
+| products | product_width_cm | integer | nullable | Width in cm |
+| product_category_translation | product_category_name | varchar(100) | NN, PK | Portuguese lookup key; trimmed |
+| product_category_translation | product_category_name_english | varchar(100) | NN | English label; trimmed |
 
----
+All nullable numeric product attributes have non-negative checks; SQL CHECK semantics allow nulls.
 
-# Products
+## Geolocation
 
-| Column                     | Data Type | Description                                        |
-| -------------------------- | --------- | -------------------------------------------------- |
-| product_id                 | VARCHAR   | Unique identifier of the product.                  |
-| product_category_name      | VARCHAR   | Category to which the product belongs.             |
-| product_name_lenght        | INTEGER   | Number of characters in the product name.          |
-| product_description_lenght | INTEGER   | Number of characters in the product description.   |
-| product_photos_qty         | INTEGER   | Number of product images available in the catalog. |
-| product_weight_g           | INTEGER   | Weight of the product in grams.                    |
-| product_length_cm          | INTEGER   | Length of the product in centimeters.              |
-| product_height_cm          | INTEGER   | Height of the product in centimeters.              |
-| product_width_cm           | INTEGER   | Width of the product in centimeters.               |
+| Column | Type | Null/key | Meaning |
+|---|---|---|---|
+| geolocation_zip_code_prefix | integer | NN, no key | ZIP prefix; repeats |
+| geolocation_lat | decimal(10,8) | NN | Latitude |
+| geolocation_lng | decimal(11,8) | NN | Longitude |
+| geolocation_city | varchar(50) | NN | City; conditionally trimmed |
+| geolocation_state | char(2) | NN | State code; conditionally trimmed |
 
----
-
-# Sellers
-
-| Column                 | Data Type | Description                               |
-| ---------------------- | --------- | ----------------------------------------- |
-| seller_id              | VARCHAR   | Unique identifier of each seller.         |
-| seller_zip_code_prefix | INTEGER   | ZIP code prefix of the seller's location. |
-| seller_city            | VARCHAR   | Seller's city.                            |
-| seller_state           | CHAR(2)   | Seller's state.                           |
-
----
-
-# Order Payments
-
-| Column               | Data Type     | Description                                        |
-| -------------------- | ------------- | -------------------------------------------------- |
-| order_id             | VARCHAR       | Identifier of the order.                           |
-| payment_sequential   | INTEGER       | Sequence number of the payment for the same order. |
-| payment_type         | VARCHAR       | Payment method used by the customer.               |
-| payment_installments | INTEGER       | Number of installments selected for the payment.   |
-| payment_value        | DECIMAL(10,2) | Amount paid in the payment transaction.            |
-
-# Order Reviews
-
-| Column                  | Data Type | Description                                             |
-| ----------------------- | --------- | ------------------------------------------------------- |
-| review_id               | VARCHAR   | Unique identifier of the review.                        |
-| order_id                | VARCHAR   | Identifier of the reviewed order.                       |
-| review_score            | INTEGER   | Rating given by the customer (1–5).                     |
-| review_comment_title    | VARCHAR   | Title of the review.                                    |
-| review_comment_message  | TEXT      | Detailed review message.                                |
-| review_creation_date    | TIMESTAMP | Date when the review was created.                       |
-| review_answer_timestamp | TIMESTAMP | Timestamp when the review was answered by the platform. |
-
-# Product Category Translation
-
-| Column                        | Data Type | Description                                  |
-| ----------------------------- | --------- | -------------------------------------------- |
-| product_category_name         | VARCHAR   | Product category name in Portuguese.         |
-| product_category_name_english | VARCHAR   | English translation of the product category. |
-
-# Geolocation
-
-| Column                      | Data Type     | Description                                         |
-| --------------------------- | ------------- | --------------------------------------------------- |
-| geolocation_zip_code_prefix | INTEGER       | ZIP code prefix representing a geographical region. |
-| geolocation_lat             | DECIMAL(10,8) | Latitude of the location.                           |
-| geolocation_lng             | DECIMAL(11,8) | Longitude of the location.                          |
-| geolocation_city            | VARCHAR       | City corresponding to the ZIP code prefix.          |
-| geolocation_state           | CHAR(2)       | State corresponding to the ZIP code prefix.         |
+No database transformations rename columns or replace nulls.

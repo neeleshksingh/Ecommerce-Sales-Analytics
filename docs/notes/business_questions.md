@@ -1,3 +1,7 @@
+# Business-question backlog and historical progress
+
+> Status markers below predate the final SQL audit and are not execution evidence. See [`../analytics.md`](../analytics.md) for verified implementation state.
+
 1. Which month generated the highest revenue?
 2. Which customers purchased most frequently?
 3. Which product category generated the highest profit?

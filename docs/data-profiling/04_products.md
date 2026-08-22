@@ -1,5 +1,7 @@
 # Products Table Profiling
 
+> **Physical-schema note:** the category relationship discussed below is conceptual; the implemented foreign key is intentionally omitted. See [`../constraints.md`](../constraints.md).
+
 ---
 
 ## Purpose

@@ -1,5 +1,7 @@
 # Database Relationships
 
+> **Audit note (2026-08-21):** these are conceptual discovery notes. The authoritative implemented relationships and exceptions are in [`../data_model.md`](../data_model.md) and [`../constraints.md`](../constraints.md).
+
 | Parent Table | Child Table    | Relationship      |
 | ------------ | -------------- | ----------------- |
 | Customers    | Orders         | One-to-Many (1:N) |

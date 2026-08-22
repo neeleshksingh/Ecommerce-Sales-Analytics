@@ -1,74 +1,21 @@
-# Project Assumptions
+# Assumptions and interpretation rules
 
-## Customers
+These rules are derived from implemented SQL, not desired future behavior.
 
-- customer_id is unique.
-- customer_unique_id identifies the same customer across multiple orders.
+| Topic | Implemented interpretation | Caveat |
+|---|---|---|
+| Customer identity | Use `customer_unique_id` across purchases; `customer_id` joins an order to its customer record | `vw_customers` remains customer-record grain, not unique-person grain |
+| Revenue / spending | `SUM(order_items.price)` | Product-price revenue excludes freight and is not payment cash flow/profit; no order-status filter is normally applied |
+| Payment value | Amount on one payment transaction | Do not join payments directly to items before separate aggregation; implemented revenue analytics do not use it |
+| Products sold | Count order-item rows/product IDs | Quantity column does not exist; repeated units appear as separate item rows |
+| AOV | Product-price revenue / distinct orders, or average of order-level price sums | Excludes freight and includes all statuses unless a query filters |
+| Delivery time | Delivered-customer date minus approval date | Requires both timestamps; date-casting in some queries discards partial days |
+| Late delivery | Delivered timestamp greater than estimated timestamp | Missing delivery yields flag 0 in `vw_delivery`; state analysis excludes missing delivered/approved timestamps |
+| Repeat customer | Unique customer with at least two distinct orders | Only customers having orders are in denominator |
+| RFM | Recency since latest purchase, distinct-order frequency, product-price monetary | `CURRENT_DATE` reference is dynamic; no status filter |
+| CLV | Historical product-price spend, with supporting order/lifetime fields | This is realized historical value, not predictive lifetime value |
+| Category translation | Left join Portuguese category to English lookup | Null/unmapped categories remain null; physical FK intentionally omitted |
+| Geolocation | Descriptive source observations | No direct physical FK; reduce duplicate ZIP observations before fact joins |
+| Nulls | Unknown/not available is preserved | No imputation is implemented |
 
-## Orders
-
-- order_id is unique.
-- customer_id exists in Customers.
-
-## Order Items
-
-- (order_id, order_item_id) forms a composite primary key.
-- Price represents the selling price at the time of purchase.
-
-# Sellers
-
-## Assumptions
-
-- seller_id uniquely identifies each seller.
-- A seller can fulfill multiple order items.
-- Seller revenue is calculated by joining with Order Items.
-- Seller location is used for logistics and regional analysis.
-- Seller information is descriptive and does not contain transaction data.
-
-# Order Payments
-
-## Assumptions
-
-- An order may have multiple payment transactions.
-- One payment transaction belongs to only one order.
-- Payment amount represents the amount paid in that payment record.
-- Payment installments are applicable only for eligible payment methods.
-- Revenue calculations should use the payment_value column.
-- Payment information is stored separately to normalize transaction data.
-
-## Order Reviews
-
-- Each review is associated with one order.
-- An order may or may not receive a review.
-- Review scores are expected to range from 1 to 5.
-- Review comments are optional.
-- Review creation occurs after order delivery.
-- The answer timestamp should not be earlier than the review creation date.
-
-## Product Category Translation
-
-- Each Portuguese category has one English translation.
-- A category can be associated with multiple products.
-- Products without a matching category translation may appear untranslated in reports.
-- Category names should remain consistent across the dataset.
-
-## Geolocation
-
-- A ZIP code prefix may appear multiple times in the dataset.
-- Customers and sellers are associated with geographical regions using ZIP code prefixes.
-- Latitude and longitude represent approximate locations within a ZIP code prefix.
-- Geolocation data is used for reporting and analysis rather than transactional processing.
-
-## Payment Value Validation
-
-Business Rule:
-- payment_value must not be negative.
-
-Dataset Observation:
-- The Olist dataset contains 9 payment records with payment_value = 0.00.
-- These records are associated with voucher and not_defined payment types.
-- They are treated as valid dataset exceptions and are not considered data quality issues.
-
-Validation Rule:
-- payment_value < 0 → Invalid
-- payment_value = 0 → Valid business exception
+No implemented metric represents profit because cost/margin data is absent.

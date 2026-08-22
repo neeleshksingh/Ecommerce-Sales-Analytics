@@ -1,5 +1,7 @@
 # Ecommerce Sales Analytics - Interview Notes
 
+> **Historical learning notes:** use [`../README.md`](../README.md), [`../metrics.md`](../metrics.md), and [`../data_model.md`](../data_model.md) for the audited implementation and canonical definitions.
+
 This document contains interview questions and explanations derived from the project. Every question is based on the database design, business understanding, and analytical decisions made during the project.
 
 ---

@@ -1,5 +1,7 @@
 # Order Reviews Table Profiling
 
+> **Physical-schema note:** the implemented primary key is (`review_id`, `order_id`), and source data contains repeated review IDs and repeated order IDs. See [`../data_model.md`](../data_model.md).
+
 ---
 
 ## Purpose

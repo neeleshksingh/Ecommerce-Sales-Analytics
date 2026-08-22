@@ -17,6 +17,8 @@ I want your repository to look like something maintained by a **Data Analyst/Dat
 
 # 📂 SQL Folder Structure
 
+> **Historical planning note:** several filenames and folder layouts below were proposals and do not match the implemented repository. Use [`../README.md`](../README.md) for the canonical documentation index.
+
 ```text
 sql/
 │
