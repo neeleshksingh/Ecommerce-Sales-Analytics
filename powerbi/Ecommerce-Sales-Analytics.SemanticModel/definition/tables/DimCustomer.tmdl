@@ -1,0 +1,57 @@
+table DimCustomer
+	lineageTag: e417b98d-6878-4724-b4e5-3c8b0cb0e1b7
+
+	column customer_id
+		dataType: string
+		lineageTag: 93d9e23c-9905-4d46-8042-dde665043c84
+		summarizeBy: none
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_unique_id
+		dataType: string
+		lineageTag: b382aca8-0b34-466b-8e09-8dd22777d206
+		summarizeBy: none
+		sourceColumn: customer_unique_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_zip_code_prefix
+		dataType: int64
+		formatString: 0
+		lineageTag: 1395d2ed-523a-4770-9bbc-0fa084ee11b4
+		summarizeBy: none
+		sourceColumn: customer_zip_code_prefix
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_city
+		dataType: string
+		lineageTag: 96b8cd2c-7ef4-41fa-aaa6-6bd64ec10ad0
+		summarizeBy: none
+		sourceColumn: customer_city
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_state
+		dataType: string
+		lineageTag: e8f3c2a6-ecc4-4c78-a0c4-5a2917c0ff2c
+		summarizeBy: none
+		sourceColumn: customer_state
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimCustomer = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "ecommerce_sales_analytics"),
+				    public_customers = Source{[Schema="public",Item="customers"]}[Data]
+				in
+				    public_customers
+
+	changedProperty = Name
+
+	annotation PBI_ResultType = Table
+

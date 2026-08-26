@@ -11,5 +11,38 @@ annotation __PBI_TimeIntelligenceEnabled = 1
 
 annotation PBI_ProTooling = ["DevMode"]
 
+annotation PBI_QueryOrder = ["public vw_orders","public vw_customers","public vw_products","public vw_sellers","public vw_payments","public vw_delivery","public vw_rfm","DimCustomer","FactOrderItems","FactOrders","DimProduct","DimSeller","_Measures"]
+
+ref table 'public vw_orders'
+ref table DateTableTemplate_7f151bb0-7b20-4383-a5a0-ad5355905a00
+ref table LocalDateTable_715bee49-67bb-4996-b045-7f5d3c14e407
+ref table LocalDateTable_78a17be3-9119-435b-9079-681d3df9cfb3
+ref table LocalDateTable_a6513b63-80dc-4359-852f-8e87c849b8e0
+ref table LocalDateTable_471f9bc2-5db7-4853-87f2-c29fe85cc451
+ref table 'public vw_customers'
+ref table 'public vw_products'
+ref table 'public vw_sellers'
+ref table 'public vw_payments'
+ref table 'public vw_delivery'
+ref table LocalDateTable_111cd65c-7f44-4a53-a65a-a34c353cb587
+ref table LocalDateTable_1efc003e-b4d0-4707-a312-82048127721b
+ref table LocalDateTable_79e6a13b-df72-407b-9f3e-e0e82142568d
+ref table LocalDateTable_aaefbac3-79f4-4883-9992-ce3b2da3d539
+ref table 'public vw_rfm'
+ref table LocalDateTable_1d681861-ce5b-4f83-b1ed-6eb751a947a6
+ref table DimCustomer
+ref table FactOrderItems
+ref table LocalDateTable_a0c07ec4-4b29-4aa9-8096-d55cf7394e6b
+ref table FactOrders
+ref table LocalDateTable_83762d9d-d4ee-4d99-ad67-6a5be996bcbd
+ref table LocalDateTable_2397d88e-d222-4c78-8d48-0ae28a656788
+ref table LocalDateTable_a52f0686-5528-4950-9173-0dcd0139e561
+ref table LocalDateTable_50f1c8c2-6ea0-4424-bd35-bab4b94f4097
+ref table DimProduct
+ref table DimSeller
+ref table DimDate
+ref table LocalDateTable_c4832973-0422-4bef-ab71-413db9ad14b4
+ref table _Measures
+
 ref cultureInfo en-US
 

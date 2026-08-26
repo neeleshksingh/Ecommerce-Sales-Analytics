@@ -1,0 +1,144 @@
+table _Measures
+	lineageTag: f7a5f053-f2d7-4460-be77-be8c7e4b83ab
+
+	measure 'Average Item Price' =
+			
+			AVERAGE(FactOrderItems[price])
+		lineageTag: 32e5ae21-6311-4eb1-946d-94550b435c75
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Average Order Value' =
+			
+			DIVIDE(
+			    [Total Revenue],
+			    [Sales Orders]
+			)
+		lineageTag: fe068a26-d744-4f8a-90cc-b836ce4f3a31
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Customers' =
+			
+			DISTINCTCOUNT(DimCustomer[customer_unique_id])
+		formatString: 0
+		lineageTag: de262ded-b7b7-4227-aae5-f26d3315d6d2
+
+	measure 'Total Freight' =
+			
+			SUM(FactOrderItems[freight_value])
+		lineageTag: ae297558-53b8-493c-812b-916a083fff9e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Items Sold' =
+			
+			COUNTROWS(FactOrderItems)
+		formatString: 0
+		lineageTag: 1d3e367c-c6f5-4de9-8a06-31945a2a30e9
+
+	measure 'Total Orders' =
+			
+			DISTINCTCOUNT(FactOrders[order_id])
+		formatString: 0
+		lineageTag: bf2e8a3b-0035-4331-ac6e-078612f4def2
+
+	measure 'Total Revenue' =
+			
+			SUM(FactOrderItems[price])
+		lineageTag: 5a123865-4c45-496a-900e-0f26faa0bd34
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Average Delivery Days' =
+			
+			AVERAGEX(
+			    FILTER(
+			        FactOrders,
+			        NOT ISBLANK(FactOrders[order_delivered_customer_date]) &&
+			        NOT ISBLANK(FactOrders[order_approved_at])
+			    ),
+			    DATEDIFF(
+			        FactOrders[order_approved_at],
+			        FactOrders[order_delivered_customer_date],
+			        DAY
+			    )
+			)
+		lineageTag: b7330417-fb8d-4fce-8f98-b3cdba9ce0ed
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Late Orders' =
+			
+			CALCULATE(
+			    [Total Orders],
+			    FILTER(
+			        FactOrders,
+			        NOT ISBLANK(FactOrders[order_delivered_customer_date]) &&
+			        NOT ISBLANK(FactOrders[order_estimated_delivery_date]) &&
+			        FactOrders[order_delivered_customer_date]
+			            > FactOrders[order_estimated_delivery_date]
+			    )
+			)
+		formatString: 0
+		lineageTag: 403d2448-47f2-4337-abcd-fcc997b19410
+
+	measure 'Late Delivery %' =
+			
+			DIVIDE(
+			    [Late Orders],
+			    [Total Orders]
+			)
+		lineageTag: 531e34b9-81b3-4fff-91b6-d621b9d931b3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Previous Month Revenue' =
+			
+			CALCULATE(
+			    [Total Revenue],
+			    DATEADD(
+			        DimDate[Date],
+			        -1,
+			        MONTH
+			    )
+			)
+		lineageTag: d9f295b8-e3c1-4820-a480-60e17eed3ef0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'MoM Revenue Growth %' =
+			
+			DIVIDE(
+			    [Total Revenue] - [Previous Month Revenue],
+			    [Previous Month Revenue]
+			)
+		lineageTag: 2b97775f-4156-4344-bfc0-d29776cbdeee
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Sales Orders' =
+			
+			DISTINCTCOUNT(FactOrderItems[order_id])
+		formatString: 0
+		lineageTag: 391f9d87-0ec1-4d3d-9ad9-e4719a2b892f
+
+	column Measure
+		dataType: string
+		lineageTag: ae11f003-62a3-4a50-8490-619299680f9c
+		summarizeBy: none
+		sourceColumn: Measure
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Measures = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45W8k1NLC4tSi1Wio0FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Measure = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Measure", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

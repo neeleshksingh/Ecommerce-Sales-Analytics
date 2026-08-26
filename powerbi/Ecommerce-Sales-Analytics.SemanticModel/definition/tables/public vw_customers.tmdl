@@ -1,0 +1,46 @@
+table 'public vw_customers'
+	lineageTag: f5d79a9e-b28c-4901-a7c6-8b8dcd7affee
+
+	column customer_id
+		dataType: string
+		lineageTag: 7e5388b2-9a59-489c-addf-6bc3c08599b7
+		summarizeBy: none
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_unique_id
+		dataType: string
+		lineageTag: 04a3ad38-c184-4b91-bf99-6d3b032ef61d
+		summarizeBy: none
+		sourceColumn: customer_unique_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_city
+		dataType: string
+		lineageTag: ba7fbb7a-eef3-4ea4-8528-0716904e2597
+		summarizeBy: none
+		sourceColumn: customer_city
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_state
+		dataType: string
+		lineageTag: fb725d77-be43-4812-b747-f0dca4ba0d07
+		summarizeBy: none
+		sourceColumn: customer_state
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'public vw_customers' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "ecommerce_sales_analytics"),
+				    public_vw_customers = Source{[Schema="public",Item="vw_customers"]}[Data]
+				in
+				    public_vw_customers
+
+	annotation PBI_ResultType = Table
+

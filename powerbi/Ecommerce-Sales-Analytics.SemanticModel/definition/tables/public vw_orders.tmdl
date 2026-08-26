@@ -1,0 +1,118 @@
+table 'public vw_orders'
+	lineageTag: 20eab5d7-a3e1-4269-85cf-7642f7fd0f88
+
+	column order_id
+		dataType: string
+		lineageTag: 887ac898-865b-420e-a011-921ae793099d
+		summarizeBy: none
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_id
+		dataType: string
+		lineageTag: af0259f4-aa15-455d-9727-5260d50b6958
+		summarizeBy: none
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_unique_id
+		dataType: string
+		lineageTag: 7c5a2927-741e-4d19-b7d0-81e43346477b
+		summarizeBy: none
+		sourceColumn: customer_unique_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_city
+		dataType: string
+		lineageTag: 13a76ecb-b388-434f-a95f-da81b6df517c
+		summarizeBy: none
+		sourceColumn: customer_city
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_state
+		dataType: string
+		lineageTag: fe0a67f6-5c08-43d7-823a-15ac0fffe26c
+		summarizeBy: none
+		sourceColumn: customer_state
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_status
+		dataType: string
+		lineageTag: dda7fc0e-48cd-49b4-b7c8-84b3eed11854
+		summarizeBy: none
+		sourceColumn: order_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_purchase_timestamp
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 7c5a9122-f0ee-46c3-aaa7-1eee4b200205
+		summarizeBy: none
+		sourceColumn: order_purchase_timestamp
+
+		variation Variation
+			isDefault
+			relationship: 69202181-98d1-41ae-9120-08b4c126808f
+			defaultHierarchy: LocalDateTable_715bee49-67bb-4996-b045-7f5d3c14e407.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_approved_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 408bfb02-052f-4212-bfed-5ab42351caa1
+		summarizeBy: none
+		sourceColumn: order_approved_at
+
+		variation Variation
+			isDefault
+			relationship: d2bbca90-f189-4ea7-81d4-6e7523a03d7c
+			defaultHierarchy: LocalDateTable_78a17be3-9119-435b-9079-681d3df9cfb3.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_delivered_customer_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 3c51758b-b398-4b6d-b6f9-90d28a8fa6a0
+		summarizeBy: none
+		sourceColumn: order_delivered_customer_date
+
+		variation Variation
+			isDefault
+			relationship: e09eeb14-d201-4a65-9de4-65d7c6bb755d
+			defaultHierarchy: LocalDateTable_a6513b63-80dc-4359-852f-8e87c849b8e0.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_estimated_delivery_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: dc9a1ea2-5d10-41c1-8971-baf1898ec652
+		summarizeBy: none
+		sourceColumn: order_estimated_delivery_date
+
+		variation Variation
+			isDefault
+			relationship: 785d8b93-1658-4667-82e1-b7e392a88c2a
+			defaultHierarchy: LocalDateTable_471f9bc2-5db7-4853-87f2-c29fe85cc451.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'public vw_orders' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "ecommerce_sales_analytics"),
+				    public_vw_orders = Source{[Schema="public",Item="vw_orders"]}[Data]
+				in
+				    public_vw_orders
+
+	annotation PBI_ResultType = Table
+

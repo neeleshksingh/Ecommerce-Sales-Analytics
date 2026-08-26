@@ -1,0 +1,66 @@
+table 'public vw_payments'
+	lineageTag: 6e1ce329-64c6-430f-b079-b4844ebd106d
+
+	column order_id
+		dataType: string
+		lineageTag: a348068d-901c-4f72-9484-1da0255ecfec
+		summarizeBy: none
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column payment_sequential
+		dataType: int64
+		formatString: 0
+		lineageTag: 83bcd936-57f5-4ece-b782-3d5453c134d6
+		summarizeBy: sum
+		sourceColumn: payment_sequential
+
+		annotation SummarizationSetBy = Automatic
+
+	column payment_type
+		dataType: string
+		lineageTag: 38d4d4ba-b3c1-4413-959b-3c28daac83b0
+		summarizeBy: none
+		sourceColumn: payment_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column payment_installments
+		dataType: int64
+		formatString: 0
+		lineageTag: eecfa6c4-d447-4382-9626-db250541a40d
+		summarizeBy: sum
+		sourceColumn: payment_installments
+
+		annotation SummarizationSetBy = Automatic
+
+	column payment_value
+		dataType: double
+		lineageTag: 2f87f701-82e1-4f59-9936-9571b679872f
+		summarizeBy: sum
+		sourceColumn: payment_value
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column order_status
+		dataType: string
+		lineageTag: 69151819-cfc8-4745-b5ca-0dfde08a908f
+		summarizeBy: none
+		sourceColumn: order_status
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'public vw_payments' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "ecommerce_sales_analytics"),
+				    public_vw_payments = Source{[Schema="public",Item="vw_payments"]}[Data]
+				in
+				    public_vw_payments
+
+	annotation PBI_ResultType = Table
+

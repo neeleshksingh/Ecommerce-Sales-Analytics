@@ -1,0 +1,124 @@
+table 'public vw_delivery'
+	lineageTag: 2f5beaf4-a5ea-4517-aa5c-7c66fe64ebb1
+
+	column order_id
+		dataType: string
+		lineageTag: 9aa39568-41cc-4754-9598-95886e3af931
+		summarizeBy: none
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_status
+		dataType: string
+		lineageTag: 61e0d310-1389-45fd-bb4a-934f05380701
+		summarizeBy: none
+		sourceColumn: order_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column purchase_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: b5604b85-b991-4791-baee-48d2050d2f9d
+		summarizeBy: none
+		sourceColumn: purchase_date
+
+		variation Variation
+			isDefault
+			relationship: ce7d2e53-7742-437a-b8dd-58bbb2aed841
+			defaultHierarchy: LocalDateTable_111cd65c-7f44-4a53-a65a-a34c353cb587.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column approved_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 81f475bf-72f1-4b33-b492-92ba0bf6d70f
+		summarizeBy: none
+		sourceColumn: approved_date
+
+		variation Variation
+			isDefault
+			relationship: c4c22c13-96b0-4be0-a3b5-53ffe307e69d
+			defaultHierarchy: LocalDateTable_1efc003e-b4d0-4707-a312-82048127721b.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column delivered_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 92dabffb-7a4f-499d-a3ff-5439419c4b6d
+		summarizeBy: none
+		sourceColumn: delivered_date
+
+		variation Variation
+			isDefault
+			relationship: 2b6e704b-431b-4c7c-bc4a-d6141c098ff2
+			defaultHierarchy: LocalDateTable_79e6a13b-df72-407b-9f3e-e0e82142568d.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column estimated_delivery_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 39aed975-db77-447a-a7d5-27df5cffcdfd
+		summarizeBy: none
+		sourceColumn: estimated_delivery_date
+
+		variation Variation
+			isDefault
+			relationship: 6ef5ac0e-357d-479b-97be-349a2f2a0fec
+			defaultHierarchy: LocalDateTable_aaefbac3-79f4-4883-9992-ce3b2da3d539.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column delivery_days
+		dataType: double
+		lineageTag: 33afe06b-f0ce-4852-ace9-0e2ba40b8c6a
+		summarizeBy: sum
+		sourceColumn: delivery_days
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column approval_days
+		dataType: double
+		lineageTag: 91ea7148-cc23-42c0-a2bc-0559cf6f98b2
+		summarizeBy: sum
+		sourceColumn: approval_days
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column late_delivery_flag
+		dataType: int64
+		formatString: 0
+		lineageTag: ea511029-1d0b-48d1-bfa9-85592885d3dd
+		summarizeBy: sum
+		sourceColumn: late_delivery_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column on_time_delivery_flag
+		dataType: int64
+		formatString: 0
+		lineageTag: d544bc37-be9a-4f48-badb-58dd254a46e8
+		summarizeBy: sum
+		sourceColumn: on_time_delivery_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'public vw_delivery' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "ecommerce_sales_analytics"),
+				    public_vw_delivery = Source{[Schema="public",Item="vw_delivery"]}[Data]
+				in
+				    public_vw_delivery
+
+	annotation PBI_ResultType = Table
+

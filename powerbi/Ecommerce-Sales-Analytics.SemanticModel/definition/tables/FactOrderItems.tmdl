@@ -1,0 +1,83 @@
+table FactOrderItems
+	lineageTag: 1318db9a-223c-433d-9868-e40b26b60247
+
+	column order_id
+		dataType: string
+		lineageTag: 64a56566-a790-4710-ac47-2e737041629e
+		summarizeBy: none
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_item_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 76bdc648-108a-4ca8-9d1d-283ed0812dec
+		summarizeBy: sum
+		sourceColumn: order_item_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_id
+		dataType: string
+		lineageTag: 32f808f4-af1f-4822-892c-cda39558de22
+		summarizeBy: none
+		sourceColumn: product_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column seller_id
+		dataType: string
+		lineageTag: 91db20c3-bc13-405d-afa9-b4bda5932507
+		summarizeBy: none
+		sourceColumn: seller_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column shipping_limit_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 03ca611a-117a-4445-8a87-cbf87afe2451
+		summarizeBy: none
+		sourceColumn: shipping_limit_date
+
+		variation Variation
+			isDefault
+			relationship: f5c29cba-67b7-470d-87f2-d6e8f153f536
+			defaultHierarchy: LocalDateTable_a0c07ec4-4b29-4aa9-8096-d55cf7394e6b.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column price
+		dataType: double
+		lineageTag: 0aefbe22-0341-4516-a027-4163021b2a1a
+		summarizeBy: sum
+		sourceColumn: price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column freight_value
+		dataType: double
+		lineageTag: 66e8372b-0b56-4132-9801-56638fe9dd6f
+		summarizeBy: sum
+		sourceColumn: freight_value
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition FactOrderItems = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "ecommerce_sales_analytics"),
+				    public_order_items = Source{[Schema="public",Item="order_items"]}[Data]
+				in
+				    public_order_items
+
+	changedProperty = Name
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,88 @@
+table 'public vw_rfm'
+	lineageTag: e8ee5dc9-679d-4ce0-bbde-22747158b24f
+
+	column customer_unique_id
+		dataType: string
+		lineageTag: 6ed583bd-7fb7-4765-9d79-f9d521637b52
+		summarizeBy: none
+		sourceColumn: customer_unique_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_id
+		dataType: string
+		lineageTag: 67725aa9-4438-4f41-9faa-3a4f6f108a6f
+		summarizeBy: none
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_city
+		dataType: string
+		lineageTag: 25618806-2ca5-44c6-aa5f-ec4fdfa4b778
+		summarizeBy: none
+		sourceColumn: customer_city
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_state
+		dataType: string
+		lineageTag: 406352e8-1cd6-4145-8619-7772e704d77c
+		summarizeBy: none
+		sourceColumn: customer_state
+
+		annotation SummarizationSetBy = Automatic
+
+	column last_purchase_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: a98d9818-305b-444b-aa1f-da1d23e3fb5f
+		summarizeBy: none
+		sourceColumn: last_purchase_date
+
+		variation Variation
+			isDefault
+			relationship: 60c2395a-6783-4701-8772-56cf9fe0a53c
+			defaultHierarchy: LocalDateTable_1d681861-ce5b-4f83-b1ed-6eb751a947a6.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column recency
+		dataType: int64
+		formatString: 0
+		lineageTag: dc794fa8-9450-4518-b033-45c2572d1cfd
+		summarizeBy: sum
+		sourceColumn: recency
+
+		annotation SummarizationSetBy = Automatic
+
+	column frequency
+		dataType: int64
+		formatString: 0
+		lineageTag: 012d4ba0-8d75-4eb0-a465-f880708ddcb3
+		summarizeBy: sum
+		sourceColumn: frequency
+
+		annotation SummarizationSetBy = Automatic
+
+	column monetary
+		dataType: double
+		lineageTag: 663d59b4-d808-4345-8244-d3bc171b7f2a
+		summarizeBy: sum
+		sourceColumn: monetary
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 'public vw_rfm' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "ecommerce_sales_analytics"),
+				    public_vw_rfm = Source{[Schema="public",Item="vw_rfm"]}[Data]
+				in
+				    public_vw_rfm
+
+	annotation PBI_ResultType = Table
+

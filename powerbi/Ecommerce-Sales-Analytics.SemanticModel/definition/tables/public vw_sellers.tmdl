@@ -1,0 +1,56 @@
+table 'public vw_sellers'
+	lineageTag: a04f9af8-c9ef-4882-8a5a-3e19e0ec1e5f
+
+	column seller_id
+		dataType: string
+		lineageTag: f29b5d43-c2e1-4760-8fba-31c52b81672f
+		summarizeBy: none
+		sourceColumn: seller_id
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column seller_city
+		dataType: string
+		lineageTag: ab74bb8e-b0bd-459b-816a-d146b2bb6171
+		summarizeBy: none
+		sourceColumn: seller_city
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column seller_state
+		dataType: string
+		lineageTag: 7f98ad72-d771-40d3-9a2e-5c2be30087c8
+		summarizeBy: none
+		sourceColumn: seller_state
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column seller_location
+		dataType: string
+		lineageTag: dd13608f-2a2c-42de-b2e2-89d563c6c05f
+		summarizeBy: none
+		sourceColumn: seller_location
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'public vw_sellers' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "ecommerce_sales_analytics"),
+				    public_vw_sellers = Source{[Schema="public",Item="vw_sellers"]}[Data]
+				in
+				    public_vw_sellers
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+

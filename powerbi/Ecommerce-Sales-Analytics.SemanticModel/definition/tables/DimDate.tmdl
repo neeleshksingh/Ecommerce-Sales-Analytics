@@ -1,0 +1,83 @@
+table DimDate
+	lineageTag: dc6015f0-de1b-4ad1-8603-b32ecef9d367
+	dataCategory: Time
+
+	column Date
+		isKey
+		formatString: General Date
+		lineageTag: 61a7ebfd-3ea3-4b81-94a9-16d2331101ee
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		formatString: 0
+		lineageTag: 689b2903-1b44-449d-93d1-77e4d918f5fa
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Year]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Number'
+		formatString: 0
+		lineageTag: e9564c7f-aaf2-439d-aa4b-6f41cae7f5dd
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month Number]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		lineageTag: ba095433-9800-4f23-b092-046c46391443
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Year Month'
+		lineageTag: f6b18329-b3d9-402c-9946-92c551c24912
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Year Month]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		lineageTag: 7192d34e-ca0c-4278-9d16-65074e9a6d5f
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Quarter]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Year Quarter'
+		lineageTag: cc61e1d7-b367-48d3-946a-3a38e8f424ec
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Year Quarter]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimDate = calculated
+		mode: import
+		source =
+				
+				ADDCOLUMNS(
+				    CALENDAR(
+				        MIN(FactOrders[order_purchase_timestamp]),
+				        MAX(FactOrders[order_purchase_timestamp])
+				    ),
+				    "Year", YEAR([Date]),
+				    "Month Number", MONTH([Date]),
+				    "Month", FORMAT([Date], "MMM"),
+				    "Year Month", FORMAT([Date], "YYYY-MM"),
+				    "Quarter", "Q" & FORMAT([Date], "Q"),
+				    "Year Quarter", FORMAT([Date], "YYYY") & "-Q" & FORMAT([Date], "Q")
+				)
+
+	annotation PBI_Id = 2539d49dc84341629fbc1bb0b5231082
+

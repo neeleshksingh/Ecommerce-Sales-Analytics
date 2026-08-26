@@ -1,0 +1,101 @@
+table 'public vw_products'
+	lineageTag: 754aac6b-2f08-48b3-bcf8-26ea9a32e61a
+
+	column product_id
+		dataType: string
+		lineageTag: 4defd0ef-3c4f-45f6-8384-59ab7458c254
+		summarizeBy: none
+		sourceColumn: product_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_category_name
+		dataType: string
+		lineageTag: 1a05413d-56e7-4bae-a314-da12ee03a01d
+		summarizeBy: none
+		sourceColumn: product_category_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_category_name_english
+		dataType: string
+		lineageTag: a4dbb949-1d8b-454b-aa82-283a41c7a81e
+		summarizeBy: none
+		sourceColumn: product_category_name_english
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_name_lenght
+		dataType: int64
+		formatString: 0
+		lineageTag: 0602ff41-b1a0-44fe-8cdc-e96eb103474b
+		summarizeBy: sum
+		sourceColumn: product_name_lenght
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_description_lenght
+		dataType: int64
+		formatString: 0
+		lineageTag: 6982ea55-0d7f-448d-95ac-cb0221ce19ac
+		summarizeBy: sum
+		sourceColumn: product_description_lenght
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_photos_qty
+		dataType: int64
+		formatString: 0
+		lineageTag: c069ab1f-ee44-48bc-95e3-0764209b1ddb
+		summarizeBy: sum
+		sourceColumn: product_photos_qty
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_weight_g
+		dataType: int64
+		formatString: 0
+		lineageTag: 0e8a1f82-04f1-426e-a915-24f3052b7266
+		summarizeBy: sum
+		sourceColumn: product_weight_g
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_length_cm
+		dataType: int64
+		formatString: 0
+		lineageTag: 808a0a46-abb0-4faa-95b2-2aa7a6045e4a
+		summarizeBy: sum
+		sourceColumn: product_length_cm
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_height_cm
+		dataType: int64
+		formatString: 0
+		lineageTag: a375bfd3-038e-457c-b835-ae07f147d897
+		summarizeBy: sum
+		sourceColumn: product_height_cm
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_width_cm
+		dataType: int64
+		formatString: 0
+		lineageTag: 5a48967e-ecaa-411f-8afe-b58d89c3f2bc
+		summarizeBy: sum
+		sourceColumn: product_width_cm
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'public vw_products' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "ecommerce_sales_analytics"),
+				    public_vw_products = Source{[Schema="public",Item="vw_products"]}[Data]
+				in
+				    public_vw_products
+
+	annotation PBI_ResultType = Table
+
