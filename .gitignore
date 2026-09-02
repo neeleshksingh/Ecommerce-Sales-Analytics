@@ -25,6 +25,7 @@ __pycache__/
 # Environment Variables
 # ==========================
 .env
+.env.local
 
 # ==========================
 # PostgreSQL
