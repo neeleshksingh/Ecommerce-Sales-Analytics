@@ -4,10 +4,10 @@
   "position": {
     "x": 1089.4222222222222,
     "y": 379.73333333333335,
-    "z": 6,
+    "z": 4000,
     "height": 540.44444444444446,
     "width": 560.35555555555561,
-    "tabOrder": 6
+    "tabOrder": 4000
   },
   "visual": {
     "visualType": "ribbonChart",

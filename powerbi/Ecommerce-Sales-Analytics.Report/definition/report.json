@@ -37,6 +37,52 @@
           "type": "BaseTheme"
         }
       ]
+    },
+    {
+      "name": "RegisteredResources",
+      "type": "RegisteredResources",
+      "items": [
+        {
+          "name": "brazil-silhouette9747728091594501.png",
+          "path": "brazil-silhouette9747728091594501.png",
+          "type": "Image"
+        },
+        {
+          "name": "icon_bar_chart4781032272211688.png",
+          "path": "icon_bar_chart4781032272211688.png",
+          "type": "Image"
+        },
+        {
+          "name": "icon_cart14700803855767575.png",
+          "path": "icon_cart14700803855767575.png",
+          "type": "Image"
+        },
+        {
+          "name": "icon_home0012911882968464905.png",
+          "path": "icon_home0012911882968464905.png",
+          "type": "Image"
+        },
+        {
+          "name": "icon_people027219944453382716.png",
+          "path": "icon_people027219944453382716.png",
+          "type": "Image"
+        },
+        {
+          "name": "icon_store9958415084124863.png",
+          "path": "icon_store9958415084124863.png",
+          "type": "Image"
+        },
+        {
+          "name": "icon_tag7854526619310028.png",
+          "path": "icon_tag7854526619310028.png",
+          "type": "Image"
+        },
+        {
+          "name": "icon_truck944817624148075.png",
+          "path": "icon_truck944817624148075.png",
+          "type": "Image"
+        }
+      ]
     }
   ],
   "settings": {
